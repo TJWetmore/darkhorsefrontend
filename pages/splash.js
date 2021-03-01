@@ -36,8 +36,6 @@ const SplashPage = () => {
         </Container>
         </GridItem>
       </Grid>
-      <Button
-      onClick={()=> console.log(user)}> Click Me </Button>
       </>
   )
 }

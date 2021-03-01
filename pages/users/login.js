@@ -26,14 +26,10 @@ const Login = () => {
     event.preventDefault();
     const { name, value } = event.target;
     setCurrentUserField({ ...currentUser, [name]: value });
-    console.log(event.target.value);
-    console.log(currentUser)
-    console.log(typeof currentUser.email)
   };  
 
   const handleSubmit = event => {
     event.preventDefault()
-    axios.post('/api/entry/index', { title: "Foo Bar", slug: "foo-bar", body: "lorem ipsum" });
     fire.auth()
     .signInWithEmailAndPassword(email.toString(), password.toString())
     .then((userCredential) => {
@@ -50,13 +46,12 @@ const Login = () => {
 
   return (
     <>
-    <Navbar/>
-    <Flex align="center" justify="center">
-    <Heading pt={40}>
+    <Flex  pt={15, 25, 40} align="center" justify="center">
+    <Heading  >
       Log In
     </Heading>
     </Flex>
-    <Container marginBottom="3px solid silver" justifyContent="column">
+    <Container mb={15, 25, 40} justifyContent="column" position='fixed'>
     <Box maxW="3lx" borderWidth="1px" borderRadius="lg" boarderColor="" overflow="hidden">
       <FormControl p={4} id="email" isRequired>
         <FormLabel m={2}>Email Address</FormLabel>
@@ -83,16 +78,6 @@ const Login = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
-      {/* {errors.passwordError !== '' && (
-        <Text id="noPassword" fontSize="lg" color="#9C4221">
-          {errors.passwordError}
-        </Text>
-      )}
-      {errors.passwordMatchError !== '' && (
-        <Text id="passwordMatch" fontSize="lg" color="#9C4221">
-          {errors.passwordMatchError}
-        </Text>
-      )} */}
     </FormControl>
       <Flex align="center" justify="center">
       <Stack direction="row" spacing={4} m={4} >

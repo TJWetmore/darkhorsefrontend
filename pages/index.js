@@ -12,9 +12,7 @@ export default function Home() {
         <title>Dark Horse Fantasy Sports</title>
         <link rel="icon" href="/DarkHorse.ico" />
       </Head>
-      <Navbar/>
       <SplashPage />
-    <Footer/>
     </div>
   )
 }

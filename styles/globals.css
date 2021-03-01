@@ -14,3 +14,30 @@ a {
 * {
   box-sizing: border-box;
 }
+
+#root {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+
+.disable-select{
+  user-select:none;
+  -moz-user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+  -ms-user-select:none;
+}
+
+img{  
+  drag: none;  
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

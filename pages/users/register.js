@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { InputRightElement, InputGroup, Select, Flex, Stack, Text, Container, Heading, FormControl, FormLabel, Input, Box, Button} from '@chakra-ui/react'
 import Link from 'next/link'
 import Navbar from '../../components/navbar.js'
+
 var database = fire.database();
 
 const Signup = () => {
@@ -110,14 +111,21 @@ const Signup = () => {
 
   return (
     <>
-    <Navbar/>
-    <Flex align="center" justify="center">
-      <Heading p={4}>
+    <Flex pt={[15, 25, 40]} align="center" justify="center">
+      <Heading>
         Sign Up
       </Heading>
     </Flex>
-  <Container marginBottom="3px solid silver" justifyContent="column">
-  <Box maxW="3lx" borderWidth="1px" borderRadius="lg" overflow="hidden">
+    <Container >
+      <Flex justifyContent="space-evenly" padding={3}>
+        <Text fontSize="16px">Have an account?  </Text>
+          <Link href="/users/login" activeClassName="active">
+              Sign In
+          </Link>
+        </Flex>
+   </Container>
+  <Container  justifyContent="column">
+  <Box  h={[500, 650, 500]}  borderWidth="1px" borderRadius="lg" overflow="auto">
     <Flex justifyContent="space-evenly" >
     <FormControl p={4} id="firstName" >
       <FormLabel m={2}>First Name</FormLabel>
@@ -312,23 +320,16 @@ const Signup = () => {
         </Text>
       )}
     </Flex>
-
-    <Flex align="center" justify="center">
-    <Stack direction="row" spacing={4} m={4} >
+    </Box>
+    <Flex pt={2} align="center" justify="center">
+    <Stack direction="row" spacing={4} >
       <Button background="#319795" variant="solid" onClick={handleRegister}>
         Sign Up
       </Button>
     </Stack>
     </Flex>
-    <Container>
-      <Flex justifyContent="space-evenly" padding={3}>
-        <Text fontSize="16px">Have an account?  </Text>
-          <Link href="/users/login" activeClassName="active">
-              Sign In
-          </Link>
-        </Flex>
-   </Container>
-  </Box>
+
+  
   </Container>
   </>
 )}

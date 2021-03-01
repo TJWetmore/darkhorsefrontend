@@ -65,6 +65,7 @@ const Header = (props) => {
       wrap="wrap"
       w="100%"
       mb={8}
+      
       p={8}
       bg={"#9C4221"}
       color={"#f5ece8"}

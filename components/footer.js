@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Flex} from "@chakra-ui/react"
+import { Button, Flex, Container} from "@chakra-ui/react"
 import ThemeToggle from './toggle-theme'
 import Link from 'next/link'
 
@@ -8,6 +8,8 @@ const Footer = () => {
 
   return (
     <>
+
+    <Container pt={39}>
     <Flex
     bottom="0"
     left="0"
@@ -16,8 +18,10 @@ const Footer = () => {
     position="absolute"
     wrap="wrap"
     w="100%"
-    mb={4}
-    p={2}
+    
+    // mb={4}
+    
+    
     bg={"#9C4221"}
     color={"#f5ece8"}
     >
@@ -32,6 +36,7 @@ const Footer = () => {
         >
         </Flex>
     </Flex>
+    </Container>
     </>
   )
 }
