@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import fire from '../../config/fire-config.js';
 import PlayerCard from '../../components/playerCard'
-import Trail from '../../components/trail'
-import Link from 'next/link'
+import StarTeam from '../../components/starnewteam'
+import Trail from '../../components/ReactSpringsComponents/trail'
+import { useRouter } from 'next/router'
 
 import { 
   Flex, 
@@ -20,9 +21,11 @@ import {
 
 const NewTeam = ({currentPlayers}) => {
   let user = fire.auth().currentUser;
-  const [open, set] = useState(true)
+  const [open, setOpen] = useState(true)
+  const router = useRouter()
 
   let [availablePlayers, setAvailablePlayers]= useState(currentPlayers);
+  let [showStar, setShowStar]= useState(false);
 
   const [currentTeam, setCurrentTeam] = useState({});
   const [removedPlayers, setRemovedPlayers] = useState([]);
@@ -144,6 +147,10 @@ const NewTeam = ({currentPlayers}) => {
     }
     setAvailablePlayers(obj)
   }
+
+  /// is there a way to use effect only when certain things are loaded? 
+
+  // is there a way to use effect for just when the current team changes?
  
   const handleTeamAdd = (el, position) => {
   let positionName = handleTeamPosition(position); 
@@ -155,10 +162,15 @@ const NewTeam = ({currentPlayers}) => {
     let arr = availablePlayers[position];
     let index = arr.indexOf(el);
     position = arr.splice(index, 1);
-    setAvailablePlayers({...availablePlayers, position});
+    setAvailablePlayers({...arr});
     filterTeams(el.CurrentTeam)
   }
 };  
+
+useEffect(() => {
+
+}, [currentTeam]);
+
 
 const handleUpdatedTeamPosition = (position) => {
   let team = currentTeam;
@@ -216,10 +228,25 @@ const handlePlayers = (event) => {
   setDisplayPlayers({name});
 };  
 
-const boxcolor = Object.keys(currentTeam).length === 14 ? '#F6E05E' : "#FFFFF0" ;
+const handleSubmit = (props) => {
+  setShowStar(true)
+}
 
-const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.length >= 14 ? '#F6E05E' : "#FFFFF0" ;
+const boxcolor = Object.keys(currentTeam).length === 14 ? '#F6E05E' : null ;
 
+const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.length >= 5 ? '#F6E05E' : null ;
+
+    if (showStar) {
+      return (
+        <>
+        <StarTeam 
+          currentTeam = {currentTeam}
+          teamName = {teamName.name}
+        />
+        </>
+      );
+    }
+    if (!showStar) {
     return (
       <>
       <Heading className="disable-select" size="xl" pt={15, 25, 40} m={2} textAlign="center" isTruncated>Pick One Player Per Team.</Heading>
@@ -245,12 +272,13 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
                   
                   availablePlayers.QB.map( el =>
                     
-                    <Flex key ={el.PlayerID} align='center' justify='center'>
+                    <Flex align='center' justify='center'>
                     
                     <PlayerCard align='center' justify='center'
                     props = {el}
                     status = 'available'
-                    handleTeam = {handleTeamAdd}
+                    handleTeam = {handleTeamAdd} 
+                    key ={el.PlayerID}
                     > 
                     </PlayerCard>
                     <Flex align='center' justify='center'>
@@ -265,7 +293,7 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
                     <PlayerCard align='center' justify='center'
                       props = {el}
                       status = 'available'
-                      handleTeam = {handleTeamAdd}
+                      handleTeam = {handleTeamAdd} key ={el.PlayerID} key ={el.PlayerID}
                     /> 
                     </Flex>
                   )
@@ -276,7 +304,7 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
                     <PlayerCard align='center' justify='center'
                     props = {el}
                     status = 'available'
-                    handleTeam = {handleTeamAdd}
+                    handleTeam = {handleTeamAdd} key ={el.PlayerID}
                     />
 
                     </Flex>
@@ -288,7 +316,7 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
                     <PlayerCard align='center' justify='center'
                     props = {el}
                     status = 'available'
-                    handleTeam = {handleTeamAdd}
+                    handleTeam = {handleTeamAdd} key ={el.PlayerID}
                     />
 
                     </Flex>
@@ -300,7 +328,7 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
                   <PlayerCard align='center' justify='center'
                   props = {el}
                   status = 'available'
-                  handleTeam = {handleTeamAdd}/>
+                  handleTeam = {handleTeamAdd} key ={el.PlayerID}/>
                   
                   </Flex>
                 )
@@ -315,11 +343,9 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
             <Text>Double Click to Remove.</Text>
               <Flex align='center' justify='center'>
                 <Input placeholder="Team Name" borderWidth="3px" id="name" borderColor = {boxcolor} name='name' onChange={handleInputChange}></Input>
-                {/* < Button w={[200, 275, 300]} m={3} borderWidth="3px" borderColor={buttonBoarder}> */}
-                  <Link href="/createateam/starteam">
-                    <a>Submit Team</a>
-                  </Link>
-                {/* </Button> */}
+                < Button  onClick={handleSubmit} w={[200, 275, 300]} m={3} borderWidth="3px" borderColor={buttonBoarder}>
+                  Submit Team
+                </Button>
               </Flex>              
             <Box w={[405, 405, 550]} h={[500, 650, 800]} borderColor = {boxcolor} padding="4" borderWidth="3px" borderRadius="lg" overflow="auto">
               {(currentTeam.QB1 !== undefined) ? 
@@ -672,7 +698,7 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
       </Grid>
       </>
     );
-
+  }
 }
 
 NewTeam.getInitialProps = async (ctx) => {

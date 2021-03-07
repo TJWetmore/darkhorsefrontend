@@ -1,10 +1,10 @@
-
 import fire from '../../config/fire-config';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import Link from 'next/link'
-import Navbar from '../../components/navbar.js'
-import axios from 'axios';
+import Link from 'next/link';
+import {useAuth} from '../../hooks/useAuth';
+import { db } from '../../config/fire-config';
+
 
 
 import { InputRightElement, InputGroup, Heading, Flex, Stack, Text, Container, FormControl, FormLabel, Input, Box, Button} from '@chakra-ui/react'
@@ -14,13 +14,13 @@ const Login = () => {
 
   const [showPW, setShowPW] = React.useState(false)
   const handleShowPW = () => setShowPW(!showPW)
+  const auth = useAuth();
+  const router = useRouter();
 
   const [currentUser, setCurrentUserField] = useState({
     email: '',
     password: '',
   });
-
-  const router = useRouter();
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -29,30 +29,28 @@ const Login = () => {
   };  
 
   const handleSubmit = event => {
-    event.preventDefault()
-    fire.auth()
-    .signInWithEmailAndPassword(email.toString(), password.toString())
-    .then((userCredential) => {
-      // Signed in
-      var user = userCredential.user;
-      // ...
+    event.preventDefault();
+    let {email, password} = currentUser;
+    return auth
+      .signIn(email, password)
+      .then(() => {
+      router.push('/dashboard');
     })
     .catch((err) => {
       console.log(err.code, err.message)
     })
-    router.push("/")
   };
 
 
   return (
     <>
-    <Flex  pt={15, 25, 40} align="center" justify="center">
+    <Flex  pt={15, 25, 40}  align="center" justify="center">
     <Heading  >
       Log In
     </Heading>
     </Flex>
-    <Container mb={15, 25, 40} justifyContent="column" position='fixed'>
-    <Box maxW="3lx" borderWidth="1px" borderRadius="lg" boarderColor="" overflow="hidden">
+    <Container pb={15, 25, 40} justifyContent="column" >
+    <Box maxW="3lx" borderWidth="1px" borderRadius="lg" overflow="hidden">
       <FormControl p={4} id="email" isRequired>
         <FormLabel m={2}>Email Address</FormLabel>
         <Input 

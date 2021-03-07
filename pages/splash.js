@@ -1,5 +1,6 @@
 import React from "react"
 import fire from '../config/fire-config.js';
+import { useAuth } from '../hooks/useAuth';
 
 
 import { 
@@ -13,6 +14,7 @@ import {
 
 const SplashPage = () => {
   let user = fire.auth().currentUser
+  const auth = useAuth();
 
   return(
     <>

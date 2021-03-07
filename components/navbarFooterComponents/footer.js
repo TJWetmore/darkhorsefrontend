@@ -1,11 +1,14 @@
 import React from "react"
-import { Button, Flex, Container} from "@chakra-ui/react"
-import ThemeToggle from './toggle-theme'
+import { Button, Text, Flex, Container} from "@chakra-ui/react"
+import ThemeToggle from './../ui/toggle-theme'
 import Link from 'next/link'
+import Countdown from '../ui/countdown'
+import fire from '../../config/fire-config.js';
+import { useAuth } from './../../hooks/useAuth';
 
 
 const Footer = () => {
-
+  const auth = useAuth();
   return (
     <>
 
@@ -17,11 +20,7 @@ const Footer = () => {
     justify="space-between"
     position="absolute"
     wrap="wrap"
-    w="100%"
-    
-    // mb={4}
-    
-    
+    w="100%"    
     bg={"#9C4221"}
     color={"#f5ece8"}
     >
@@ -35,7 +34,13 @@ const Footer = () => {
           
         >
         </Flex>
+        {auth.user !== null ?
+    <Text>What's Good {auth.user.userName}?</Text> :
+    <Text>What's Good?</Text>  
+    }
     </Flex>
+
+    <Countdown />
     </Container>
     </>
   )

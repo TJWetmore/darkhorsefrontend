@@ -5,6 +5,8 @@ const path = require('path');
 const isDevelopment = process.env.NODE_ENV === 'development'
 const isProduction = process.env.NODE_ENV === 'production';
 const withOptimizedImages = require('next-optimized-images');
+// var firebase = require('firebase');
+// var firebaseui = require('firebaseui');
 
 const nextConfig = {
     webpack: (config, { dev }) => {

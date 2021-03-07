@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from "react"
-import { StarIcon } from '@chakra-ui/icons'
-
-import { useSpring, animated, interpolate } from 'react-spring';
+import React, {useEffect, useState} from "react";
+import Trail from './reactSpringsComponents/trail';
+import { useSpring, animated, to } from 'react-spring';
 import { useGesture } from 'react-with-gesture';
-import CustomCheck from './checkBox'
 
 import { 
   Grid,
@@ -11,7 +9,7 @@ import {
   Box, 
   Image,
   Text, 
-  IconButton,
+  Container,
   Heading,
   Center,
   GridItem} 
@@ -26,11 +24,15 @@ const PlayerCard = (el, handleTeam, status) => {
   let logo = require(`../media/logos/${el.props.CurrentTeam}.png`)
   let star = require(`../media/star2.png`)
 
+  const [open, set] = useState(true)
+
   let [tracker, setTracker]= useState(true);
 
   let [deleteTracker, setDeleteTracker]= useState(true);
 
   let [starTracker, setStarTracker]= useState(true);
+
+  let [deleteStarTracker, setDeleteStarTracker]= useState(true);
 
 
   const property = {
@@ -46,17 +48,18 @@ const PlayerCard = (el, handleTeam, status) => {
     star : el.props.star
   }
 
-    const [bind, { delta, down }] = useGesture()
+    const [bind, { delta, down, dragging }] = useGesture()
     const { x, bg, size } = useSpring({
       x: down ? delta[0] : 0,
       bg: `linear-gradient(200deg, ${delta[0] < -10 ? `${property.secondaryColor} 0%, ${property.primaryColor}` : `${property.primaryColor} 0%, ${property.secondaryColor}`} 100%)`,
       size: down ? 1.1 : 1,
-      immediate: name => down && name === 'x'
+      immediate: name => down && name === 'x',
+      config: { duration: 200 },
+      delay: 1
     })
-    const avSize = x.interpolate({ map: Math.abs, range: [0, 75], output: ['scale(0.5)', 'scale(1)'], extrapolate: 'clamp' })
+    const avSize = x.to({ map: Math.abs, range: [-500, 500], output: ['scale(0.5)', 'scale(1)'], extrapolate: 'clamp' })
 
     useEffect(() => {
-      // console.log(delta[0])
       if (tracker && delta[0] > 250 && el.status ==='available') {
         el.handleTeam(el.props, el.props.Position)
         setTracker(false)
@@ -66,24 +69,47 @@ const PlayerCard = (el, handleTeam, status) => {
         setDeleteTracker(false)
       }
 
+      if (starTracker && delta[0] > 250 && el.status ==='star team') {
+        el.handleStar(el.props, el.props.Position)
+        setTracker(false)
+      }
+      
+      if (deleteStarTracker && delta[0] < -250 && el.status ==='star team') {
+        el.removeStar(el.props, el.props.Position)
+        setDeleteTracker(false)
+      }
+
 
     }, [delta[0]]);
 
+    const doubleClick = () =>{
+      if (el.status ==='available' || el.status ==='current team') el.handleTeam(el.props, el.props.Position)
+      if (el.status ==='star team' && !property.star) el.handleStar(el.props, el.props.Position)
+      if (el.status ==='star team' && property.star) el.removeStar(el.props, el.props.Position)
+
+    }
+
+    const cardBackground = property.star ? '#F6E05E' : null;
+
     return (
       <>
+      <Trail open={open} key= {el.props.PlayerID}>
       <Box 
+      className="disable-select"
       w={[300, 325, 400]} 
       h={['auto']}
       borderRadius={['lg']}
       p={[0,1, 1]}
       m= {[1]}
       border="1px" 
+      background = {cardBackground}
       borderColor={property.secondaryColor}
-      onDoubleClick={() => el.handleTeam(el.props, el.props.Position)}
+      onDoubleClick={doubleClick}
+      
       >
       <animated.div   {...bind()} style={{ background: bg, margin:'2px', padding:'1px' }} >
-        <animated.div className="av" style={{ transform: avSize, justifySelf: delta[0] < 1 ? 'end' : 'start' }} />
-        <animated.div className="fg" style={{ transform: interpolate([x, size], (x, s) => `translate3d(${x}px,0,0) scale(${s})`) }}>
+        <animated.div className="av" style={{ transform: avSize, justifySelf: dragging ? 'end' : 'start' }} />
+        <animated.div className="fg" style={{ transform: to([x, size], (x, s) => `translate3d(${x}px,0,0) scale(${s})`) }}>
         <Grid templateColumns={["repeat(4, 1fr)"]} templateRows={["repeat(2, 23px)"]} gap={2}>
           <GridItem colSpan={[0, 0, 1]} >
             <Center>
@@ -101,10 +127,12 @@ const PlayerCard = (el, handleTeam, status) => {
             </Center>
           </GridItem>
           <GridItem colSpan={[2]}>
-            <Box>
-            <Heading color="#F7FAFC" textAlign={[ 'left', 'left', 'center' ]} fontSize={["md", "sm", "lg"]} textOverflow='fade'>{property.name}</Heading>
+            <Container  >
+            <GridItem rowSpan={[1]} w={[200, 200, 'auto']}>
+            <Heading color="#F7FAFC" textAlign={[ 'left', 'left', 'center' ]} fontSize={["md", "md", "md"]} textOverflow='fade'>{property.name}</Heading>
+            </GridItem>
             <Text color="#F7FAFC" textAlign={[ 'left', 'left', 'center' ]} fontSize={["md", "sm", "md"]}>{property.position} - {property.team}</Text>
-            </Box>
+            </Container>
           </GridItem>
           <GridItem 
           colSpan={1}
@@ -122,6 +150,7 @@ const PlayerCard = (el, handleTeam, status) => {
       </animated.div>
       </animated.div>
       </Box>
+      </Trail>
       </>
       
     );

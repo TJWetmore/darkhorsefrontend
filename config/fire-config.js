@@ -1,7 +1,12 @@
 import firebase from 'firebase';
 
+import 'firebase/auth';
+import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_apiKey,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_authDomain,
   databaseURL: process.env.NEXT_PUBLIC_FIREBASE_databaseURL,
@@ -19,4 +24,10 @@ try {
 }
 const fire = firebase;
 var database = firebase.database();
+const app = firebase.app();
+const auth = firebase.auth();
+const db = firebase.firestore();
+const now = firebase.firestore.Timestamp.now();
+const storage = firebase.storage();
+export { auth, db, now, storage };
 export default fire;

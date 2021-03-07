@@ -1,11 +1,12 @@
 import React from "react";
 import Link from 'next/link'
 import { Box, Flex, Text, Button, Container } from "@chakra-ui/react";
-import Logo from "./ui/Logo";
-import fire from '/Users/thomaswetmore/Code/Berry/next-tj/config/fire-config.js';
+import Logo from "./../ui/Logo";
+import fire from '../../config/fire-config.js';
 
 
 let user = fire.auth().currentUser
+
 
 const MenuItem = ({ children, isLast, to = "/", ...rest }) => {
   return (
@@ -42,17 +43,9 @@ const MenuIcon = () => (
   </svg>
 );
 
-const Header = (props) => {
+const HeaderSignedIn = (props) => {
   const [show, setShow] = React.useState(false);
   const toggleMenu = () => setShow(!show);
-
-  const signOut = () => {
-    fire.auth().signOut().then(() => {
-      console.log('Signed Out')
-    }).catch((error) => {
-      // An error happened.
-    });
-  }
 
   return (
     <Flex
@@ -91,12 +84,9 @@ const Header = (props) => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/">Home</MenuItem>
           <MenuItem to="/how">How It Works </MenuItem>
-          <MenuItem to='/userTeams'>My Teams</MenuItem>
-          <MenuItem to='/barrysBlog'>Berry's Blog</MenuItem>
-          {(user === null) ? 
-          <MenuItem to="/users/register" isLast>
+          <MenuItem to="/users/register">Register</MenuItem>
+          <MenuItem to= '/users/login' isLast>
             <Button
               onClick={() => console.log(user)}
               size="sm"
@@ -107,29 +97,13 @@ const Header = (props) => {
                 bg: ["primary.100", "primary.100", "primary.600", "primary.600"]
               }}
             >
-              Get Started
+              Log In
             </Button>
             </MenuItem>
-            :
-            <MenuItem to="/users/register" isLast>
-            <Button
-              size="sm"
-              rounded="md"
-              color={"#9C4221"}
-              bg={"#f5ece8"}
-              _hover={{
-              bg: ["primary.100", "primary.100", "primary.600", "primary.600"]
-              }}
-              onClick={signOut}
-            >
-              Sign Out
-            </Button>
-            </MenuItem>
-          }
         </Flex>
       </Box>
     </Flex>
   );
 };
 
-export default Header;
+export default HeaderSignedIn;

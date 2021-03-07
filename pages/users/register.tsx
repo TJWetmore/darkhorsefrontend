@@ -3,12 +3,14 @@ import fire from '../../config/fire-config';
 import { useRouter } from 'next/router';
 import { InputRightElement, InputGroup, Select, Flex, Stack, Text, Container, Heading, FormControl, FormLabel, Input, Box, Button} from '@chakra-ui/react'
 import Link from 'next/link'
-import Navbar from '../../components/navbar.js'
+import { db } from '../../config/fire-config';
+import {useAuth} from '../../hooks/useAuth';
+
 
 var database = fire.database();
 
 const Signup = () => {
-
+  const auth = useAuth();
   const router = useRouter();
 
   const [currentUser, setCurrentUserField] = useState({
@@ -35,30 +37,30 @@ const Signup = () => {
 
   //validation function to set error messages
   let validate = () => {
-    let errorsValidate = {};
-    if (currentUser.userName.trim() === '') errorsValidate.usernameError = "User name is required.";
+    let errors = {};
+    if (currentUser.userName.trim() === '') errors.usernameError = "User name is required.";
     if (currentUser.userName !== '') errors.usernameError = "" ;
 
-    if (currentUser.password.trim() === '') errorsValidate.passwordError = "Password is required.";
+    if (currentUser.password.trim() === '') errors.passwordError = "Password is required.";
     if (currentUser.password.trim() !== '') errors.passwordError = "";
 
-    if (currentUser.confirmedPassword.trim() === '') errorsValidate.confirmedPasswordError = "Please confirm your password.";
+    if (currentUser.confirmedPassword.trim() === '') errors.confirmedPasswordError = "Please confirm your password.";
     if (currentUser.confirmedPassword.trim() !== '') errors.confirmedPasswordError = "";
     
-    if (currentUser.password !== currentUser.confirmedPassword) errorsValidate.passwordMatchError = "Passwords do not match, please try again.";
+    if (currentUser.password !== currentUser.confirmedPassword) errors.passwordMatchError = "Passwords do not match, please try again.";
     if (currentUser.password === currentUser.confirmedPassword)  errors.passwordMatchError = "";
 
-    if (currentUser.email.trim() === '') errorsValidate.emailError = "Please add your email address";
+    if (currentUser.email.trim() === '') errors.emailError = "Please add your email address";
     if (currentUser.email.trim() !== '') errors.emailError = "";
 
-    if (currentUser.homeState.trim() === '') errorsValidate.homeStateError = "Please select your homestate.";
+    if (currentUser.homeState.trim() === '') errors.homeStateError = "Please select your homestate.";
     if (currentUser.homeState.trim() !== '') errors.homeStateError = "";
     
-    if (currentUser.birthYear.trim() === '' || currentUser.birthMonth.trim() === '' || currentUser.birthDate.trim() === '') errorsValidate.birthDateError = "Please insert your birthday" ;
+    if (currentUser.birthYear.trim() === '' || currentUser.birthMonth.trim() === '' || currentUser.birthDate.trim() === '') errors.birthDateError = "Please insert your birthday" ;
     if (currentUser.birthYear.trim() !== '' || currentUser.birthMonth.trim() !== '' || currentUser.birthDate.trim() !== '') errors.birthDateError = "" ;
 
-    console.log(Object.keys(errorsValidate).length)
-    return Object.keys(errorsValidate).length === 0 ? null : errors;
+    console.log(Object.keys(errors).length)
+    return Object.keys(errors).length === 0 ? null : errors;
   }
   
 
@@ -84,27 +86,36 @@ const Signup = () => {
     });
   }
 
+const signUp = () => {
+  let { userName, email, password, homeState, birthYear } = currentUser;
+ return auth
+  .signUp(userName, email, password, homeState, birthYear)
+  .then((response) => {
+    console.log(response)
+    })
+  .catch((error) => {
+   return { error };
+  });
+};
+
+const createUser = (user) => {
+  console.log('fired Create User with ', user)
+  return db
+   .collection('users')
+   .doc(user.uid)
+   .set(user)
+   .then(() => {
+    console.log("Success")
+   })
+   .catch((error) => {
+    console.log(error)
+   });
+ };
+
   const handleRegister = (e) => {
     e.preventDefault();
-    const validated = validate()
-    console.log('validate ', validate())
-    if (validated === null){
-      console.log('passed verification')
-      
-      fire.auth()
-        .createUserWithEmailAndPassword(currentUser.email, currentUser.password)
-        .catch((err) => {
-          console.log(err.code, err.message)
-        });
-      var user = fire.auth().currentUser;
-      var uid;
-      if (user != null) {
-        uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-      }
-      console.log('writting data')
-      writeUserData(uid)
+    signUp();
       router.push("/")
-    }
     }
   
 
