@@ -1,9 +1,9 @@
 import firebase from 'firebase';
 
 import 'firebase/auth';
-import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
+// import 'firebase-admin';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
@@ -18,16 +18,20 @@ export const firebaseConfig = {
 };
 try {
   firebase.initializeApp(firebaseConfig);
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 } catch(err){
   if (!/already exists/.test(err.message)) {
     console.error('Firebase initialization error', err.stack)}
 }
+
 const fire = firebase;
-var database = firebase.database();
+const database = firebase.database();
+
 const app = firebase.app();
 const auth = firebase.auth();
 const db = firebase.firestore();
 const now = firebase.firestore.Timestamp.now();
 const storage = firebase.storage();
-export { auth, db, now, storage };
+// const firebaseAdmin = firebase.admin();
+export { auth, db, now, storage, database};
 export default fire;

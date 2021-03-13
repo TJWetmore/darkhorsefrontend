@@ -36,32 +36,32 @@ const Signup = () => {
   });
 
   //validation function to set error messages
-  let validate = () => {
-    let errors = {};
-    if (currentUser.userName.trim() === '') errors.usernameError = "User name is required.";
-    if (currentUser.userName !== '') errors.usernameError = "" ;
+  // let validate = () => {
+  //   let errors = {};
+  //   if (currentUser.userName.trim() === '') errors.usernameError = "User name is required.";
+  //   if (currentUser.userName !== '') errors.usernameError = "" ;
 
-    if (currentUser.password.trim() === '') errors.passwordError = "Password is required.";
-    if (currentUser.password.trim() !== '') errors.passwordError = "";
+  //   if (currentUser.password.trim() === '') errors.passwordError = "Password is required.";
+  //   if (currentUser.password.trim() !== '') errors.passwordError = "";
 
-    if (currentUser.confirmedPassword.trim() === '') errors.confirmedPasswordError = "Please confirm your password.";
-    if (currentUser.confirmedPassword.trim() !== '') errors.confirmedPasswordError = "";
+  //   if (currentUser.confirmedPassword.trim() === '') errors.confirmedPasswordError = "Please confirm your password.";
+  //   if (currentUser.confirmedPassword.trim() !== '') errors.confirmedPasswordError = "";
     
-    if (currentUser.password !== currentUser.confirmedPassword) errors.passwordMatchError = "Passwords do not match, please try again.";
-    if (currentUser.password === currentUser.confirmedPassword)  errors.passwordMatchError = "";
+  //   if (currentUser.password !== currentUser.confirmedPassword) errors.passwordMatchError = "Passwords do not match, please try again.";
+  //   if (currentUser.password === currentUser.confirmedPassword)  errors.passwordMatchError = "";
 
-    if (currentUser.email.trim() === '') errors.emailError = "Please add your email address";
-    if (currentUser.email.trim() !== '') errors.emailError = "";
+  //   if (currentUser.email.trim() === '') errors.emailError = "Please add your email address";
+  //   if (currentUser.email.trim() !== '') errors.emailError = "";
 
-    if (currentUser.homeState.trim() === '') errors.homeStateError = "Please select your homestate.";
-    if (currentUser.homeState.trim() !== '') errors.homeStateError = "";
+  //   if (currentUser.homeState.trim() === '') errors.homeStateError = "Please select your homestate.";
+  //   if (currentUser.homeState.trim() !== '') errors.homeStateError = "";
     
-    if (currentUser.birthYear.trim() === '' || currentUser.birthMonth.trim() === '' || currentUser.birthDate.trim() === '') errors.birthDateError = "Please insert your birthday" ;
-    if (currentUser.birthYear.trim() !== '' || currentUser.birthMonth.trim() !== '' || currentUser.birthDate.trim() !== '') errors.birthDateError = "" ;
+  //   if (currentUser.birthYear.trim() === '' || currentUser.birthMonth.trim() === '' || currentUser.birthDate.trim() === '') errors.birthDateError = "Please insert your birthday" ;
+  //   if (currentUser.birthYear.trim() !== '' || currentUser.birthMonth.trim() !== '' || currentUser.birthDate.trim() !== '') errors.birthDateError = "" ;
 
-    console.log(Object.keys(errors).length)
-    return Object.keys(errors).length === 0 ? null : errors;
-  }
+  //   console.log(Object.keys(errors).length)
+  //   return Object.keys(errors).length === 0 ? null : errors;
+  // }
   
 
   const [showPW, setShowPW] = React.useState(false)
@@ -130,7 +130,7 @@ const createUser = (user) => {
     <Container >
       <Flex justifyContent="space-evenly" padding={3}>
         <Text fontSize="16px">Have an account?  </Text>
-          <Link href="/users/login" activeClassName="active">
+          <Link href="/users/login">
               Sign In
           </Link>
         </Flex>
@@ -181,7 +181,6 @@ const createUser = (user) => {
       <FormLabel m={2}>Password</FormLabel >
       <InputGroup size="md">
         <Input 
-        placeholder="Password" 
         name="password"
         onChange={handleInputChange}
         pr="4.5rem"
@@ -214,7 +213,6 @@ const createUser = (user) => {
         onChange={handleInputChange}
         pr="4.5rem"
         type={showCPW ? "text" : "password"}
-        placeholder="Enter password"
         />
         <InputRightElement width="4.5rem">
           <Button h="1.75rem" size="sm" onClick={handleShowConfirmedPW}>

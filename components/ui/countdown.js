@@ -16,10 +16,13 @@ import {
   const CountDown = () => {
     var targetDate = new Date("2021-09-09")
 
-    console.log(targetDate)
+    let currentDate = Date.now()
+
+    const diffTime = Math.abs(targetDate - currentDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
     return (
-      <Text>Football Starts in: {targetDate}</Text>
+      <Text textAlign='center'>Football Starts in: {diffDays} days </Text>
 
     )
   }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useTrail, a, to } from 'react-spring'
 
-function Trail({ open, children, ...props }) {
+const Trail = ({ open, children, ...props }) => {
   const items = React.Children.toArray(children)
-  const trail = useTrail(items.length, {
+  const trailsub = useTrail(items.length, {
     config: { mass: 50, tension: 2000, friction: 500 },
     opacity: open ? 1 : 0,
     x: open ? 0 : 20,
@@ -13,7 +13,7 @@ function Trail({ open, children, ...props }) {
   return (
     <div className="trails-main" {...props}>
       <div>
-        {trail.map(({ x, height, ...rest }, index) => (
+        {trailsub.map(({ x, height, ...rest }, index) => (
           <a.div
             className="trails-text"
             style={{ ...rest, transform: x.to((x) => `translate3d(0,${x}px,0)`) }}>

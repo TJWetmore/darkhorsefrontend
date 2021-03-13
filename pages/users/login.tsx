@@ -34,7 +34,7 @@ const Login = () => {
     return auth
       .signIn(email, password)
       .then(() => {
-      router.push('/dashboard');
+      router.push('/myteams');
     })
     .catch((err) => {
       console.log(err.code, err.message)
@@ -44,12 +44,12 @@ const Login = () => {
 
   return (
     <>
-    <Flex  pt={15, 25, 40}  align="center" justify="center">
+    <Flex  pt={[20, 25, 40]}  align="center" justify="center">
     <Heading  >
       Log In
     </Heading>
     </Flex>
-    <Container pb={15, 25, 40} justifyContent="column" >
+    <Container pb={[20, 25, 40]} justifyContent="column" >
     <Box maxW="3lx" borderWidth="1px" borderRadius="lg" overflow="hidden">
       <FormControl p={4} id="email" isRequired>
         <FormLabel m={2}>Email Address</FormLabel>
@@ -63,7 +63,6 @@ const Login = () => {
       <FormLabel m={2}>Password</FormLabel >
       <InputGroup size="md">
         <Input 
-        placeholder="Password" 
         name="password"
         onChange={handleInputChange}
         pr="4.5rem"
@@ -87,7 +86,7 @@ const Login = () => {
       <Container>
         <Flex justifyContent="space-evenly" padding={3}>
           <Text fontSize="16px">Don't have an account?  </Text>
-              <Link href="/users/register" activeClassName="active">
+              <Link href="/users/register">
                   Sign up
             </Link>
           </Flex>

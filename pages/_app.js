@@ -17,15 +17,13 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={customTheme}>
       <AuthProvider>
-        <CSSReset />
-        <Navbar/>
-          <div>
-          <Component {...pageProps} />
-          </div>
-        <Footer/>
+          <CSSReset />
+          <Navbar/>
+            <Component {...pageProps} />
+          <Footer/>
       </AuthProvider>
     </ChakraProvider>
   )
-}
+};
 
 export default MyApp

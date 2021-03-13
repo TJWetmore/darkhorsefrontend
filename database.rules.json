@@ -1,7 +1,7 @@
 {
   "rules": {
     ".read": true,
-    ".write": false,
+    ".write": true,
     "users": {
       "$uid": {
         ".read": "$uid === auth.uid || root.child('users/'+auth.uid).child('roles').hasChildren(['ADMIN'])",

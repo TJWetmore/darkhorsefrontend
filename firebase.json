@@ -4,6 +4,6 @@
   },
   "hosting": {
     "site": "darkhorse",
-    "public": "public",
+    "public": "public"
   }
 }

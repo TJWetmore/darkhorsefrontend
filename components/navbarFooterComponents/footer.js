@@ -11,7 +11,6 @@ const Footer = () => {
   const auth = useAuth();
   return (
     <>
-
     <Container pt={39}>
     <Flex
     bottom="0"
@@ -33,14 +32,12 @@ const Footer = () => {
           pr={5}
           
         >
+          <Button onClick={()=>console.log(auth.user)}>View Team</Button>
+        
+          <Countdown m={3} alignItems='center'/>
         </Flex>
-        {auth.user !== null ?
-    <Text>What's Good {auth.user.userName}?</Text> :
-    <Text>What's Good?</Text>  
-    }
     </Flex>
 
-    <Countdown />
     </Container>
     </>
   )

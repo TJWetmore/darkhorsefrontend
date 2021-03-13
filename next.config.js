@@ -13,9 +13,15 @@ const nextConfig = {
         config.plugins.push(
             new webpack.EnvironmentPlugin(process.env),
         );
-        
-        // config.resolve.alias['components'] = path.join(__dirname, 'components')
-        // config.resolve.alias['static'] = path.join(__dirname, 'static')
+        config.module.rules.push({
+        node: {
+
+            fs: 'empty',
+            child_process : 'empty',
+            net : 'empty',
+            tls: 'empty',
+          }
+        })
 
         return config;
     },

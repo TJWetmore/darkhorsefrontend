@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import fire from '../../config/fire-config.js';
 import PlayerCard from '../../components/playerCard'
-import StarTeam from '../../components/starnewteam'
+import StarTeam from './starnewteam'
 import Trail from '../../components/ReactSpringsComponents/trail'
 import { useRouter } from 'next/router'
 
 import { 
   Flex, 
+  Spinner,
   Input, 
   Grid,
   Text, 
@@ -147,10 +148,6 @@ const NewTeam = ({currentPlayers}) => {
     }
     setAvailablePlayers(obj)
   }
-
-  /// is there a way to use effect only when certain things are loaded? 
-
-  // is there a way to use effect for just when the current team changes?
  
   const handleTeamAdd = (el, position) => {
   let positionName = handleTeamPosition(position); 
@@ -167,9 +164,7 @@ const NewTeam = ({currentPlayers}) => {
   }
 };  
 
-useEffect(() => {
 
-}, [currentTeam]);
 
 
 const handleUpdatedTeamPosition = (position) => {
@@ -252,7 +247,9 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
       <Heading className="disable-select" size="xl" pt={15, 25, 40} m={2} textAlign="center" isTruncated>Pick One Player Per Team.</Heading>
       <Text className="disable-select" textAlign="center" m={2}>Double Click 2 QBs, 3 RBs, 3 WRs, 3 Flex, 2 TEs, and 1 K.</Text>
       <Divider orientation="horizontal" pb ={5}/>
-
+      {(availablePlayers === undefined) ? 
+        <Spinner/>
+      :
       <Grid className="disable-select"  pb={10, 15, 20} templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)"]} templateRows={["repeat(2, 1fr)","repeat(2, 1fr)","repeat(1, 1fr)"]} >
         <GridItem colSpan={[1]} rowSpan={[1, 1, 2]}>
           <Container colSpan={1} maxW="lg" centerContent>
@@ -696,6 +693,7 @@ const buttonBoarder = Object.keys(currentTeam).length === 14 && teamName.name.le
         </Container>
         </GridItem>
       </Grid>
+    }
       </>
     );
   }

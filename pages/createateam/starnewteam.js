@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import PlayerCard from './playerCard'
-import Trail from './reactSpringsComponents/trail'
-import { useAuth } from './../hooks/useAuth';
+import PlayerCard from '../../components/playerCard'
+import Trail from '../../components/reactSpringsComponents/trail'
+import { useAuth } from '../../hooks/useAuth';
 import { useRouter } from 'next/router';
 
 
@@ -29,8 +29,6 @@ const StarTeam = (el) => {
 
   const [starredPositions, setstarredPositions] = useState([]);
 
-  console.log(currentTeamStarred)
-
   const handleStar = (player) => {
     for (let keys in currentTeamStarred){
       if (currentTeamStarred[keys].DraftKingsName === player.DraftKingsName && !starredPositions.includes(player.FantasyPosition) && starredPositions.length <= 2) {
@@ -39,7 +37,6 @@ const StarTeam = (el) => {
         setstarredPositions([...starredPositions, player.FantasyPosition])
       }
     }
-    console.log(starredPositions.length)
   }
 
   const removeStar = (player) => {
@@ -51,13 +48,11 @@ const StarTeam = (el) => {
         setstarredPositions(newPositions)
       }
     }
-    console.log(starredPositions.length)
   }
 
   const handleSubmit = () => {
     if (starredPositions.length === 3 && Object.keys(currentTeamStarred).length === 14) {
-      console.log('handling Submit')
-      auth.addTeam(el.teamName, currentTeamStarred).then(() => router.push('/dashboard'))
+      auth.addTeamToDB(el.teamName, currentTeamStarred).then(() => router.push('/dashboard'))
   }
 }
  

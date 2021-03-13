@@ -75,6 +75,7 @@ const HeaderSignedIn = (props) => {
     >
       <Flex align="center">
         <Logo
+        to='/'
           w="300px"
         />
       </Flex>
@@ -92,10 +93,10 @@ const HeaderSignedIn = (props) => {
           justify={["center", "space-between", "flex-end", "flex-end"]}
           direction={["column", "row", "row", "row"]}
         >
-          <MenuItem to="/">Home</MenuItem>
-          <MenuItem to="/how">How It Works </MenuItem>
-          <MenuItem to='/userTeams'>My Teams</MenuItem>
+          <MenuItem to='/myteams'>My Teams</MenuItem>
           <MenuItem to='/createateam/newteam'>Create A Team</MenuItem>
+          <MenuItem to='/myteams'>Live Scores</MenuItem>
+          <MenuItem to="/demo">Demo</MenuItem>
             <MenuItem isLast>
             <Button
               size="sm"
