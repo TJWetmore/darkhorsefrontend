@@ -1,34 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Yooooo. My buddy was doing a playoffs fantasy football game in excel. YEESH. So I made a pretty sweet Fantasy Football website. It's for the playoffs. YOU CAN PLAY FANTASY FOOTBALL DURING THE NFL PLAYOFFS. 
 
-## Getting Started
+There's a lot of React Springs. It looks sweet. It really does. 
 
-First, run the development server:
+If you're considering hiring me, there's a __tests__ folder. That's also crazy sweet. 
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+It's in Beta right now. Is there a step before Beta? Because that's where it's at. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I'm happy to collaborate. 
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+I'm happy to chat about plugging in a Firebase real-time database. 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Oh, I also do UX research. So here's the task flow:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Sign up -> Create Team -> View / Customize Your Team -> Add Team To League -> See How Your Team Does _live_ While Watching Football.
 
-## Learn More
+If you wanna take this to the next level, let me know. Super down for the open source. 
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-TJ
